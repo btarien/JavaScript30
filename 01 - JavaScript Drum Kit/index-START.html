@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="#">
 </head>
 <body>
 
@@ -58,7 +59,20 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  document.querySelectorAll('.key').forEach((div) => {
+    div.addEventListener("transitionend", (event) => {
+      event.target.classList.remove("playing");
+    });
+  });
 
+  document.addEventListener('keydown', event => {
+    [div, audio] = document.querySelectorAll(`[data-key='${event.keyCode}']`)
+    if (audio) {
+      div.classList.add("playing");
+      audio.currentTime = 0; // rewind if already playing
+      audio.play();
+    }
+  });
 </script>
 
 
